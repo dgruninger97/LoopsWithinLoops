@@ -79,24 +79,61 @@ def draw_L(window, circle, r, c):
       :type c: int
     and m and n are small, positive integers.
     """
-    x = circle.center.x
-    y = circle.center.y
-    radius = circle.radius
-    newcirclecenter = rg.Point(x, y)
+    #column part
+    diameter = circle.radius * 2
+    original_x = circle.center.x
+    original_y = circle.center.y
+    x = original_x
+    y = original_y
     for j in range(r):
-        newcirclecenter.y = y + (2 * j * radius)
-        newcircle = rg.Circle(newcirclecenter, radius)
+        for k in range(2):
+            newcircle = rg.Circle(rg.Point(x, y), circle.radius)
+            x = x + diameter
+            newcircle.fill_color = circle.fill_color
+            newcircle.attach_to(window)
+            window.render(0.1)
+        newcircle = rg.Circle(rg.Point(x, y), circle.radius)
+        y = y + diameter
         newcircle.fill_color = circle.fill_color
         newcircle.attach_to(window)
         window.render(0.1)
-        for k in range(c):
+        x = original_x
+    new_x = newcircle.center.x
+    new_y = newcircle.center.y
+        # 3x3 part
+    for j in range(3):
+        new_x = original_x
+        newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
+        new_y = new_y + diameter
+        newcircle.fill_color = circle.fill_color
+        newcircle.attach_to(window)
+        window.render(0.1)
+        for k in range(3):
+            newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
+            new_x = new_x + diameter
             newcircle.fill_color = circle.fill_color
-            newcirclecenter.x = x + (2 * k * radius)
-            newcircle = rg.Circle(newcirclecenter, radius)
             newcircle.attach_to(window)
             window.render(0.1)
-    # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    #row part
+    original_x = newcircle.center.x
+    original_y = newcircle.center.y - (3 * diameter)
+    new_x = original_x
+    new_y = original_y
+    for j in range(3):
+        new_x = original_x
+        newcircle = rg.Circle(rg.Point(new_x, new_x), circle.radius)
+        newcircle.fill_color = circle.fill_color
+        newcircle.attach_to(window)
+        window.render(0.1)
+        new_y += diameter
+        for k in range(c + 1):
+            newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
+            newcircle.fill_color = circle.fill_color
+            newcircle.attach_to(window)
+            window.render(0.1)
+            new_x += diameter
+    # # ------------------------------------------------------------------
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
