@@ -11,7 +11,7 @@ import rosegraphics as rg
 
 def main():
     """ Calls the other functions to demonstrate them. """
-    run_test_draw_L()
+    #run_test_draw_L()
     run_test_draw_wall_on_right()
 
 
@@ -86,18 +86,14 @@ def draw_L(window, circle, r, c):
     x = original_x
     y = original_y
     for j in range(r):
-        for k in range(2):
+        y = y + diameter
+        x = original_x
+        for k in range(3):
             newcircle = rg.Circle(rg.Point(x, y), circle.radius)
             x = x + diameter
             newcircle.fill_color = circle.fill_color
             newcircle.attach_to(window)
             window.render(0.1)
-        newcircle = rg.Circle(rg.Point(x, y), circle.radius)
-        y = y + diameter
-        newcircle.fill_color = circle.fill_color
-        newcircle.attach_to(window)
-        window.render(0.1)
-        x = original_x
     new_x = newcircle.center.x
     new_y = newcircle.center.y
         # 3x3 part
@@ -108,30 +104,30 @@ def draw_L(window, circle, r, c):
         newcircle.fill_color = circle.fill_color
         newcircle.attach_to(window)
         window.render(0.1)
-        for k in range(3):
+        for k in range(3 + c):
             newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
             new_x = new_x + diameter
             newcircle.fill_color = circle.fill_color
             newcircle.attach_to(window)
             window.render(0.1)
-    #row part
-    original_x = newcircle.center.x
-    original_y = newcircle.center.y - (3 * diameter)
-    new_x = original_x
-    new_y = original_y
-    for j in range(3):
-        new_x = original_x
-        newcircle = rg.Circle(rg.Point(new_x, new_x), circle.radius)
-        newcircle.fill_color = circle.fill_color
-        newcircle.attach_to(window)
-        window.render(0.1)
-        new_y += diameter
-        for k in range(c + 1):
-            newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
-            newcircle.fill_color = circle.fill_color
-            newcircle.attach_to(window)
-            window.render(0.1)
-            new_x += diameter
+    # #row part
+    # original_x = newcircle.center.x
+    # original_y = newcircle.center.y - (3 * diameter)
+    # new_x = original_x
+    # new_y = original_y
+    # for j in range(3):
+    #     new_x = original_x
+    #     newcircle = rg.Circle(rg.Point(new_x, new_x), circle.radius)
+    #     newcircle.fill_color = circle.fill_color
+    #     newcircle.attach_to(window)
+    #     window.render(0.1)
+    #     new_y += diameter
+    #     for k in range(c + 1):
+    #         newcircle = rg.Circle(rg.Point(new_x, new_y), circle.radius)
+    #         newcircle.fill_color = circle.fill_color
+    #         newcircle.attach_to(window)
+    #         window.render(0.1)
+    #         new_x += diameter
     # # ------------------------------------------------------------------
     # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
@@ -173,6 +169,27 @@ def draw_wall_on_right(rectangle, n, window):
       :type window: rg.RoseWindow
     and n is a small, positive integer.
     """
+    originalc1 = rectangle.corner_1.clone()
+    originalc2 = rectangle.corner_2.clone()
+    corner1 = originalc1
+    corner2 = originalc2
+    length = corner1.x - corner2.x
+    height = corner1.y - corner2.y
+    for j in range(n):
+        corner1.x = rectangle.corner_1.x
+        corner2.x = rectangle.corner_2.x
+        new_rect = rg.Rectangle(corner1, corner2)
+        new_rect.attach_to(window)
+        window.render(0.1)
+        corner1.y -= height
+        corner2.y -= height
+        for k in range(2 + j):
+            new_rect = rg.Rectangle(corner1, corner2)
+            new_rect.attach_to(window)
+            window.render(0.1)
+            corner1.x = corner1.x + length
+            corner2.x = corner2.x + length
+
     # ------------------------------------------------------------------
     # TODO: 3. Implement and test this function.
     #     The testing code is already written for you (above).

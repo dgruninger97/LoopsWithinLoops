@@ -305,7 +305,7 @@ def triangle_all_numbers_in_each_row(r):
             print(k + 1, end='')
         print()
     # ------------------------------------------------------------------
-    # TODO: 7. Implement and test this function.
+    # DONE: 7. Implement and test this function.
     #          Some tests are already written for you (above).
     #
     # IMPLEMENTATION RESTRICTION:
